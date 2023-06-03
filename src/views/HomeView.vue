@@ -1,17 +1,26 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+type Post = {
+  id: number;
+  desc: string;
+};
 const text = ref<string>('');
 
-const posts = ref<{ desc: string }[]>([
-  { desc: 'hello' },
-  { desc: 'firebase app' },
+const posts = ref<Post[]>([
+  { id: 1, desc: 'hello' },
+  { id: 2, desc: 'firebase app' },
 ]);
 
 const postText = () => {
-  const newDesc = { desc: text.value };
+  const newDesc = { id: new Date().getTime(), desc: text.value };
+
   posts.value.push(newDesc);
   text.value = '';
+};
+
+const postDelete = (currentPost: number) => {
+  posts.value = posts.value.filter((post) => post.id !== currentPost);
 };
 </script>
 
@@ -31,8 +40,16 @@ const postText = () => {
     >
       投稿
     </button>
-    <div v-for="post in posts">
-      <p>{{ post.desc }}</p>
+    <div class="mt-5" v-for="post in posts">
+      <div class="flex justify-center items-center">
+        <p class="mr-1">{{ post.desc }}</p>
+        <button
+          @click="postDelete(post.id)"
+          class="p-1 rounded-md w-18 bg-red-500 text-white"
+        >
+          削除
+        </button>
+      </div>
     </div>
   </div>
 </template>
