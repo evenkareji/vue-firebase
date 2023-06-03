@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, type Ref } from 'vue';
 
+import PostLists from '../components/postLists.vue';
+import Button from '@/components/Button.vue';
 type Post = {
   id: number;
   desc: string;
 };
 const text = ref<string>('');
 
-const posts = ref<Post[]>([
+const posts: Ref<Post[]> = ref([
   { id: 1, desc: 'hello' },
   { id: 2, desc: 'firebase app' },
 ]);
@@ -34,23 +36,8 @@ const postDelete = (currentPost: number) => {
       type="text"
       v-model="text"
     />
-    <button
-      class="bg-sky-500/100 w-14 rounded-md text-white p-1"
-      @click="postText"
-    >
-      投稿
-    </button>
-    <div class="mt-5" v-for="post in posts">
-      <div class="flex justify-center items-center">
-        <p class="mr-1">{{ post.desc }}</p>
-        <button
-          @click="postDelete(post.id)"
-          class="p-1 rounded-md w-18 bg-red-500 text-white"
-        >
-          削除
-        </button>
-      </div>
-    </div>
+    <Button @post-text="postText">投稿</Button>
+    <PostLists :posts="posts" @post-delete="postDelete" />
   </div>
 </template>
 
