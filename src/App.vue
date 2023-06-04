@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
+import { posts, postKey } from './usePost';
+import { provide } from 'vue';
+
+// provide('posts', posts);
+provide(postKey, posts);
 </script>
 
 <template>
   <nav>
     <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/about">About</RouterLink>
+    <RouterLink to="/login">login</RouterLink>
   </nav>
 
   <RouterView />
