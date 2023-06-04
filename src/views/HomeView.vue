@@ -2,9 +2,10 @@
 import { inject, ref, type Ref } from 'vue';
 
 import PostLists from '../components/postLists.vue';
-import Button from '@/components/Button.vue';
+import Form from '@/components/Form.vue';
 import { postKey } from '@/usePost';
-
+import { db } from '../plugins/firebase.js';
+import { collection, doc, deleteDoc } from 'firebase/firestore';
 const state = inject(postKey);
 if (!state) {
   throw new Error('state is undefined');
@@ -12,8 +13,8 @@ if (!state) {
 
 const { posts } = state;
 
-const postDelete = (currentPost: number) => {
-  posts.value = posts.value.filter((post) => post.id !== currentPost);
+const postDelete = (id: string) => {
+  deleteDoc(doc(collection(db, 'posts'), id));
 };
 </script>
 
@@ -21,7 +22,7 @@ const postDelete = (currentPost: number) => {
   <div class="text-center">
     <h1 class="m-10 text-lg font-bold">SNS</h1>
 
-    <Button>投稿</Button>
+    <Form>投稿</Form>
     <PostLists :posts="posts" @post-delete="postDelete" />
   </div>
 </template>

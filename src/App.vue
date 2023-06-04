@@ -3,7 +3,6 @@ import { RouterLink, RouterView } from 'vue-router';
 import { posts, postKey } from './usePost';
 import { provide } from 'vue';
 
-// provide('posts', posts);
 provide(postKey, posts);
 </script>
 

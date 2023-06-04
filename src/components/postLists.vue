@@ -1,21 +1,17 @@
 <script setup lang="ts">
 type Post = {
-  id: number;
+  id: string;
   desc: string;
 };
 
 type Props = {
   posts: Post[];
 };
-
 defineProps<Props>();
 const emit = defineEmits(['post-delete']);
-const getDeleteId = (id: number) => {
-  console.log(id);
+const getDeleteId = (id: string) => {
   emit('post-delete', id);
 };
-
-// <{ id: number; desc: string }[]>
 </script>
 <template>
   <div class="mt-5" v-for="post in posts" :key="post.id">
